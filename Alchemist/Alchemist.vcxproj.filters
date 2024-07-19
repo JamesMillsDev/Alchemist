@@ -19,6 +19,18 @@
     <Filter Include="Source Files\Rendering">
       <UniqueIdentifier>{898b63e4-f2a4-4a03-9384-3e4d0dd550fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{cab0416b-215a-4961-940e-a43ef3031379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{ab683636-c9e9-4d25-9415-203981eef099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameFramework">
+      <UniqueIdentifier>{1f13f873-bf0d-467d-a9b8-e344ce592b40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameFramework">
+      <UniqueIdentifier>{40d146c8-0a44-499f-a7d0-a818a0c57029}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DLLmain.cpp">
@@ -33,6 +45,12 @@
     <ClCompile Include="Alchemist\Rendering\RenderEngine.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Alchemist\Utilities\Random.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Alchemist\GameFramework\GameInstance.cpp">
+      <Filter>Source Files\GameFramework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Alchemist\Application.h">
@@ -46,6 +64,12 @@
     </ClInclude>
     <ClInclude Include="Alchemist\Rendering\RenderEngine.h">
       <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Alchemist\Utilities\Random.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Alchemist\GameFramework\GameInstance.h">
+      <Filter>Header Files\GameFramework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

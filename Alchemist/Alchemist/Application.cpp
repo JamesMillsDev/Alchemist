@@ -21,7 +21,7 @@ namespace Alchemist
 	}
 }
 
-Application::Application(const char* title, int width, int height)
+Application::Application(const char* title, const int width, const int height)
 	: m_screen{ new Screen(title, width, height) }, m_renderer{ new RenderEngine }
 {
 }
