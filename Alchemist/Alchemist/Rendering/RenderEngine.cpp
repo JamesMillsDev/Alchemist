@@ -34,6 +34,8 @@ int RenderEngine::Initialise(const Screen* screen, const int index, const uint f
 		return EXIT_FAILURE;
 	}
 
+	SDL_SetRenderDrawColor(m_renderer, 255, 255, 255, 255);
+
 	return EXIT_SUCCESS;
 }
 
