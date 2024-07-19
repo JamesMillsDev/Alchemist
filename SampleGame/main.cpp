@@ -1,9 +1,12 @@
-#include <cstdlib>
-#include <iostream>
+#include <Alchemist/Application.h>
 
 int main(int argC, char* argV[])
 {
-	std::cout << "Hello, World!\n";
+	Application* app = new Application("Sample", 1080, 720);
+
+	app->Run();
+
+	delete app;
 
 	return EXIT_SUCCESS;
 }

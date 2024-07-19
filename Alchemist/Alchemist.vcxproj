@@ -171,7 +171,16 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Alchemist\Application.cpp" />
+    <ClCompile Include="Alchemist\Rendering\RenderEngine.cpp" />
+    <ClCompile Include="Alchemist\Screen.cpp" />
     <ClCompile Include="DLLmain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Alchemist\Alchemist.h" />
+    <ClInclude Include="Alchemist\Application.h" />
+    <ClInclude Include="Alchemist\Rendering\RenderEngine.h" />
+    <ClInclude Include="Alchemist\Screen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
