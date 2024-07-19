@@ -2,9 +2,72 @@
 
 #include <iostream>
 #include <SDL/SDL_render.h>
-#include <SDL/SDL_image.h>
+
+#include <sstream>
 
 #include "Alchemist/Screen.h"
+
+using std::stringstream;
+
+SDL_Texture* RenderEngine::Load(const char* file, IMG_InitFlags type)
+{
+	stringstream path;
+	path << "Content\\Textures\\";
+	path << file;
+
+	switch (type)  // NOLINT(clang-diagnostic-switch-enum)
+	{
+	case IMG_INIT_JPG:
+		path << ".jpg";
+		break;
+
+	case IMG_INIT_PNG:
+		path << ".png";
+		break;
+
+	case IMG_INIT_TIF:
+		path << ".tif";
+		break;
+
+	default:
+		path << ".png";
+		break;
+	}
+
+	SDL_Surface* surface = IMG_Load(path.str().c_str());
+	if(surface == nullptr)
+	{
+		std::cout << "Error loading image: " << IMG_GetError() << "\n";
+		return nullptr;
+	}
+
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+	if(texture == nullptr)
+	{
+		std::cout << "Error creating texture\n";
+		return nullptr;
+	}
+
+	SDL_FreeSurface(surface);
+
+	m_loadedTextures.emplace_back(texture);
+
+	return texture;
+}
+
+void RenderEngine::Unload(SDL_Texture* texture)
+{
+	if (std::ranges::find(m_loadedTextures, texture) == m_loadedTextures.end())
+		return;
+
+	SDL_DestroyTexture(texture);
+	m_loadedTextures.remove(texture);
+}
+
+void RenderEngine::RenderTexture(SDL_Texture* texture, const SDL_Rect* dst, const SDL_Rect* src) const
+{
+	SDL_RenderCopy(m_renderer, texture, src, dst);
+}
 
 RenderEngine::RenderEngine()
 	: m_renderer{ nullptr }
@@ -13,6 +76,9 @@ RenderEngine::RenderEngine()
 
 RenderEngine::~RenderEngine()
 {
+	for (auto& texture : m_loadedTextures)
+		SDL_DestroyTexture(texture);
+		
 	SDL_DestroyRenderer(m_renderer);
 	m_renderer = nullptr;
 

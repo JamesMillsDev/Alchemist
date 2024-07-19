@@ -6,6 +6,21 @@
 #include "Screen.h"
 #include "Rendering/RenderEngine.h"
 
+Application* Application::m_app;
+
+namespace Alchemist
+{
+	Screen* GetScreen()
+	{
+		return Application::m_app->m_screen;
+	}
+
+	RenderEngine* GetRenderEngine()
+	{
+		return Application::m_app->m_renderer;
+	}
+}
+
 Application::Application(const char* title, int width, int height)
 	: m_screen{ new Screen(title, width, height) }, m_renderer{ new RenderEngine }
 {
@@ -22,6 +37,11 @@ Application::~Application()
 
 void Application::Run()
 {
+	if (m_app)
+		return;
+
+	m_app = this;
+
 	if (m_screen->Open() == EXIT_FAILURE)
 		return;
 
