@@ -1,6 +1,7 @@
 #include <Alchemist/Application.h>
 #include <Alchemist/Rendering/RenderEngine.h>
-#include <SDL/SDL_render.h>
+
+#include "Alchemist/Rendering/Texture.h"
 
 class Game : public GameInstance
 {
@@ -16,13 +17,14 @@ protected:
 
 	void BeginPlay() override
 	{
-		m_texture = Alchemist::GetRenderEngine()->Load("lettuce", IMG_INIT_PNG);
+		m_texture = new Texture("lettuce", Png);
+		m_texture->Load();
 	}
 
 	void EndPlay() override {}
 
 private:
-	SDL_Texture* m_texture;
+	Texture* m_texture;
 
 };
 

@@ -5,7 +5,9 @@
 
 #include <list>
 
-struct SDL_Renderer;
+#include "Texture.h"
+
+struct SDL_Texture;
 
 class Screen;
 
@@ -20,10 +22,10 @@ public:
 	RenderEngine(RenderEngine&&) = delete;
 
 public:
-	SDL_Texture* Load(const char* file, IMG_InitFlags type);
-	void Unload(SDL_Texture* texture);
+	SDL_Texture* Load(const char* file, ETextureFormat type, Texture* texture);
+	void Unload(Texture* texture);
 
-	void RenderTexture(SDL_Texture* texture, const SDL_Rect* dst = nullptr, const SDL_Rect* src = nullptr) const;
+	void RenderTexture(const Texture* texture, const SDL_Rect* dst = nullptr, const SDL_Rect* src = nullptr) const;
 
 public:
 	RenderEngine& operator=(const RenderEngine&) = delete;
@@ -32,7 +34,7 @@ public:
 private:
 	SDL_Renderer* m_renderer;
 
-	list<SDL_Texture*> m_loadedTextures;
+	list<Texture*> m_loadedTextures;
 
 private:
 	RenderEngine();

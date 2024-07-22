@@ -3,11 +3,12 @@
 #include <iostream>
 #include <sstream>
 #include <Alchemist/Screen.h>
+#include <Alchemist/Rendering/Texture.h>
 #include <SDL/SDL_render.h>
 
 using std::stringstream;
 
-SDL_Texture* RenderEngine::Load(const char* file, IMG_InitFlags type)
+SDL_Texture* RenderEngine::Load(const char* file, ETextureFormat type, Texture* texture)
 {
 	stringstream path;
 	path << "Content\\Textures\\";
@@ -15,15 +16,15 @@ SDL_Texture* RenderEngine::Load(const char* file, IMG_InitFlags type)
 
 	switch (type)  // NOLINT(clang-diagnostic-switch-enum)
 	{
-	case IMG_INIT_JPG:
+	case Jpg:
 		path << ".jpg";
 		break;
 
-	case IMG_INIT_PNG:
+	case Png:
 		path << ".png";
 		break;
 
-	case IMG_INIT_TIF:
+	case Tiff:
 		path << ".tif";
 		break;
 
@@ -39,8 +40,8 @@ SDL_Texture* RenderEngine::Load(const char* file, IMG_InitFlags type)
 		return nullptr;
 	}
 
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
-	if(texture == nullptr)
+	SDL_Texture* txt = SDL_CreateTextureFromSurface(m_renderer, surface);
+	if(txt == nullptr)
 	{
 		std::cout << "Error creating texture\n";
 		return nullptr;
@@ -50,21 +51,21 @@ SDL_Texture* RenderEngine::Load(const char* file, IMG_InitFlags type)
 
 	m_loadedTextures.emplace_back(texture);
 
-	return texture;
+	return txt;
 }
 
-void RenderEngine::Unload(SDL_Texture* texture)
+void RenderEngine::Unload(Texture* texture)
 {
 	if (std::ranges::find(m_loadedTextures, texture) == m_loadedTextures.end())
 		return;
 
-	SDL_DestroyTexture(texture);
+	SDL_DestroyTexture(*texture);
 	m_loadedTextures.remove(texture);
 }
 
-void RenderEngine::RenderTexture(SDL_Texture* texture, const SDL_Rect* dst, const SDL_Rect* src) const
+void RenderEngine::RenderTexture(const Texture* texture, const SDL_Rect* dst, const SDL_Rect* src) const
 {
-	SDL_RenderCopy(m_renderer, texture, src, dst);
+	SDL_RenderCopy(m_renderer, *texture, src, dst);
 }
 
 RenderEngine::RenderEngine()
@@ -74,8 +75,8 @@ RenderEngine::RenderEngine()
 
 RenderEngine::~RenderEngine()
 {
-	for (auto& texture : m_loadedTextures)
-		SDL_DestroyTexture(texture);
+	for (const auto& texture : m_loadedTextures)
+		SDL_DestroyTexture(*texture);
 		
 	SDL_DestroyRenderer(m_renderer);
 	m_renderer = nullptr;
