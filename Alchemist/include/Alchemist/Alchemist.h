@@ -16,7 +16,7 @@ typedef long long llong;
 #include <concepts>
 
 template<class T, class U>
-concept derived = std::is_base_of_v<T, U>;
+concept derived = std::is_base_of_v<U, T>;
 
 #include <string>
 

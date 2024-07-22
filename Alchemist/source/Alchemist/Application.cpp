@@ -20,21 +20,7 @@ namespace Alchemist
 	}
 }
 
-Application::Application(const char* title, const int width, const int height)
-	: m_screen{ new Screen(title, width, height) }, m_renderer{ new RenderEngine }
-{
-}
-
-Application::~Application()
-{
-	delete m_screen;
-	m_renderer = nullptr;
-
-	delete m_renderer;
-	m_renderer = nullptr;
-}
-
-void Application::Run()
+void Application::Process()
 {
 	if (m_app)
 		return;
@@ -47,12 +33,12 @@ void Application::Run()
 	if (m_renderer->Initialise(m_screen, -1, SDL_RENDERER_ACCELERATED) == EXIT_FAILURE)
 		return;
 
-	SDL_Texture* texture = m_renderer->Load("lettuce", IMG_INIT_PNG);
+	m_game->BeginPlay();
 
-	while(true)
+	while (true)
 	{
 		SDL_Event e;
-		if(SDL_WaitEvent(&e))
+		if (SDL_WaitEvent(&e))
 		{
 			Tick();
 
@@ -64,16 +50,35 @@ void Application::Run()
 
 		Render();
 
-		m_renderer->RenderTexture(texture);
-
 		m_renderer->EndFrame();
 	}
+
+	m_game->EndPlay();
+}
+
+Application::Application(const char* title, const int width, const int height, GameInstance* game)
+	: m_game{ game }, m_screen{ new Screen(title, width, height) }, m_renderer{ new RenderEngine }
+{
+}
+
+Application::~Application()
+{
+	delete m_game;
+	m_game = nullptr;
+
+	delete m_screen;
+	m_renderer = nullptr;
+
+	delete m_renderer;
+	m_renderer = nullptr;
 }
 
 void Application::Tick()
 {
+	m_game->Tick();
 }
 
 void Application::Render()
 {
+	m_game->Render();
 }
