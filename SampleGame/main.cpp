@@ -12,7 +12,8 @@ protected:
 	void Tick() override {}
 	void Render() override
 	{
-		Alchemist::GetRenderEngine()->RenderTexture(m_texture);
+		Alchemist::GetRenderEngine()->DrawTexture(m_texture, 0, 0, 410, 300, 45);
+		//Alchemist::GetRenderEngine()->DrawCircleLines(100.f, 100.f, 50.f, { 255, 0, 0, 255 });
 	}
 
 	void BeginPlay() override

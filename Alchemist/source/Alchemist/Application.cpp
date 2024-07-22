@@ -30,7 +30,7 @@ void Application::Process()
 	if (m_screen->Open() == EXIT_FAILURE)
 		return;
 
-	if (m_renderer->Initialise(m_screen, -1, SDL_RENDERER_ACCELERATED) == EXIT_FAILURE)
+	if (m_renderer->Initialise(m_screen, -1, SDL_RENDERER_ACCELERATED, { 255, 255, 255, 255 }) == EXIT_FAILURE)
 		return;
 
 	m_game->BeginPlay();
