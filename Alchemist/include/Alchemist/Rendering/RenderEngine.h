@@ -1,30 +1,23 @@
 #pragma once
 
 #include <Alchemist/Alchemist.h>
-#include <SDL/SDL_image.h>
 
-#include <list>
-
-#include "Texture.h"
-
-struct SDL_Texture;
+struct SDL_Rect;
+struct SDL_Renderer;
 
 class Screen;
-
-using std::list;
+class Texture;
 
 class DLL RenderEngine
 {
 	friend class Application;
+	friend class Texture;
 
 public:
 	RenderEngine(const RenderEngine&) = delete;
 	RenderEngine(RenderEngine&&) = delete;
 
 public:
-	SDL_Texture* Load(const char* file, ETextureFormat type, Texture* texture);
-	void Unload(Texture* texture);
-
 	void RenderTexture(const Texture* texture, const SDL_Rect* dst = nullptr, const SDL_Rect* src = nullptr) const;
 
 public:
@@ -33,8 +26,6 @@ public:
 
 private:
 	SDL_Renderer* m_renderer;
-
-	list<Texture*> m_loadedTextures;
 
 private:
 	RenderEngine();
