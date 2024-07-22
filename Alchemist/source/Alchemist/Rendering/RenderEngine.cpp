@@ -1,11 +1,9 @@
-#include "RenderEngine.h"
+#include "Alchemist/Rendering/RenderEngine.h"
 
 #include <iostream>
-#include <SDL/SDL_render.h>
-
 #include <sstream>
-
-#include "Alchemist/Screen.h"
+#include <Alchemist/Screen.h>
+#include <SDL/SDL_render.h>
 
 using std::stringstream;
 

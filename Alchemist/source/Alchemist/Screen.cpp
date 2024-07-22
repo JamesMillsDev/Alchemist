@@ -1,4 +1,4 @@
-#include "Screen.h"
+#include "Alchemist/Screen.h"
 
 #include <iostream>
 #include <SDL/SDL.h>

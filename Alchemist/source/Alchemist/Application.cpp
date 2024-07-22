@@ -1,10 +1,9 @@
-#include "Application.h"
+#include "Alchemist/Application.h"
 
+#include <Alchemist/Screen.h>
+#include <Alchemist/Rendering/RenderEngine.h>
 #include <SDL/SDL_events.h>
 #include <SDL/SDL_render.h>
-
-#include "Screen.h"
-#include "Rendering/RenderEngine.h"
 
 Application* Application::m_app;
 
@@ -48,6 +47,8 @@ void Application::Run()
 	if (m_renderer->Initialise(m_screen, -1, SDL_RENDERER_ACCELERATED) == EXIT_FAILURE)
 		return;
 
+	SDL_Texture* texture = m_renderer->Load("lettuce", IMG_INIT_PNG);
+
 	while(true)
 	{
 		SDL_Event e;
@@ -62,6 +63,8 @@ void Application::Run()
 		m_renderer->BeginFrame();
 
 		Render();
+
+		m_renderer->RenderTexture(texture);
 
 		m_renderer->EndFrame();
 	}
