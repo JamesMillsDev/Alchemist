@@ -1,9 +1,11 @@
 #pragma once
 
+#include <Alchemist/Alchemist.h>
+
 struct SDL_Rect;
 struct Vector2;
 
-struct Rect
+struct DLL Rect
 {
 public:
 	int x;

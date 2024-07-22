@@ -3,6 +3,7 @@
 #include <Alchemist/Alchemist.h>
 
 struct SDL_Texture;
+struct Color;
 
 enum ETextureFormat
 {
@@ -13,6 +14,8 @@ enum ETextureFormat
 
 class DLL Texture
 {
+	friend class RenderEngine;
+
 public:
 	Texture(const char* name, ETextureFormat format);
 	~Texture();
@@ -35,5 +38,9 @@ private:
 
 	SDL_Texture* m_texture;
 	ETextureFormat m_format;
+
+private:
+	void Tint(Color tint) const;
+	void ResetTint() const;
 
 };

@@ -21,3 +21,9 @@ concept derived = std::is_base_of_v<U, T>;
 #include <string>
 
 using std::string;
+
+#if defined(__cplusplus)
+#define CLITERAL(type)      type
+#else
+#define CLITERAL(type)      (type)
+#endif

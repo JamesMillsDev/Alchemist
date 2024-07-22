@@ -1,7 +1,6 @@
 #include <Alchemist/Application.h>
 #include <Alchemist/Rendering/RenderEngine.h>
-
-#include "Alchemist/Rendering/Texture.h"
+#include <Alchemist/Rendering/Texture.h>
 
 class Game : public GameInstance
 {
@@ -12,7 +11,7 @@ protected:
 	void Tick() override {}
 	void Render() override
 	{
-		Alchemist::GetRenderEngine()->DrawTexture(m_texture, 0, 0, 410, 300, 45);
+		Alchemist::GetRenderEngine()->DrawTexture(m_texture, 0, 0, 410, 300, 45, WHITE);
 		//Alchemist::GetRenderEngine()->DrawCircleLines(100.f, 100.f, 50.f, { 255, 0, 0, 255 });
 	}
 

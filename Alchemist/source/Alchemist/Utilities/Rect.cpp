@@ -1,7 +1,6 @@
 #include "Alchemist/Utilities/Rect.h"
 
 #include <Alchemist/Utilities/Vector2.h>
-#include <SDL/SDL_rect.h>
 
 Rect::Rect()
 	: x{ 0 }, y{ 0 }, width{ 0 }, height{ 0 }

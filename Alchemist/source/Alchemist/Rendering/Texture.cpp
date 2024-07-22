@@ -69,3 +69,15 @@ Texture::operator SDL_Texture* () const
 {
 	return m_texture;
 }
+
+void Texture::Tint(Color tint) const
+{
+	SDL_SetTextureColorMod(m_texture, tint.red, tint.green, tint.blue);
+	SDL_SetTextureAlphaMod(m_texture, tint.alpha);
+}
+
+void Texture::ResetTint() const
+{
+	SDL_SetTextureColorMod(m_texture, 255, 255, 255);
+	SDL_SetTextureAlphaMod(m_texture, 255);
+}

@@ -23,27 +23,27 @@ public:
 	RenderEngine(RenderEngine&&) = delete;
 
 public:
-	void DrawTexture(const Texture* texture, int x, int y) const;
-	void DrawTexture(const Texture* texture, int x, int y, int w, int h) const;
-	void DrawTexture(const Texture* texture, int x, int y, int w, int h, float angle) const;
-	void DrawTexture(const Texture* texture, int x, int y, int w, int h, float angle, Vector2 pivot) const;
-	void DrawTexture(const Texture* texture, int x, int y, int w, int h, float angle, Vector2 pivot, SDL_RendererFlip flip) const;
+	void DrawTexture(const Texture* texture, int x, int y, Color color) const;
+	void DrawTexture(const Texture* texture, int x, int y, int w, int h, Color color) const;
+	void DrawTexture(const Texture* texture, int x, int y, int w, int h, float angle, Color color) const;
+	void DrawTexture(const Texture* texture, int x, int y, int w, int h, float angle, Vector2 pivot, Color color) const;
+	void DrawTexture(const Texture* texture, int x, int y, int w, int h, float angle, Vector2 pivot, SDL_RendererFlip flip, Color color) const;
 
-	void DrawTexture(const Texture* texture, Vector2 pos) const;
-	void DrawTexture(const Texture* texture, Vector2 pos, Vector2 size) const;
-	void DrawTexture(const Texture* texture, Vector2 pos, Vector2 size, float angle) const;
-	void DrawTexture(const Texture* texture, Vector2 pos, Vector2 size, float angle, Vector2 pivot) const;
-	void DrawTexture(const Texture* texture, Vector2 pos, Vector2 size, float angle, Vector2 pivot, SDL_RendererFlip flip) const;
+	void DrawTexture(const Texture* texture, Vector2 pos, Color color) const;
+	void DrawTexture(const Texture* texture, Vector2 pos, Vector2 size, Color color) const;
+	void DrawTexture(const Texture* texture, Vector2 pos, Vector2 size, float angle, Color color) const;
+	void DrawTexture(const Texture* texture, Vector2 pos, Vector2 size, float angle, Vector2 pivot, Color color) const;
+	void DrawTexture(const Texture* texture, Vector2 pos, Vector2 size, float angle, Vector2 pivot, SDL_RendererFlip flip, Color color) const;
 
-	void DrawTexture(const Texture* texture, Rect rect) const;
-	void DrawTexture(const Texture* texture, Rect rect, float angle) const;
-	void DrawTexture(const Texture* texture, Rect rect, float angle, Vector2 pivot) const;
-	void DrawTexture(const Texture* texture, Rect rect, float angle, Vector2 pivot, SDL_RendererFlip flip) const;
+	void DrawTexture(const Texture* texture, Rect rect, Color color) const;
+	void DrawTexture(const Texture* texture, Rect rect, float angle, Color color) const;
+	void DrawTexture(const Texture* texture, Rect rect, float angle, Vector2 pivot, Color color) const;
+	void DrawTexture(const Texture* texture, Rect rect, float angle, Vector2 pivot, SDL_RendererFlip flip, Color color) const;
 
-	void DrawTexture(const Texture* texture, Rect src, Rect dst) const;
-	void DrawTexture(const Texture* texture, Rect src, Rect dst, float angle) const;
-	void DrawTexture(const Texture* texture, Rect src, Rect dst, float angle, Vector2 pivot) const;
-	void DrawTexture(const Texture* texture, Rect src, Rect dst, float angle, Vector2 pivot, SDL_RendererFlip flip) const;
+	void DrawTexture(const Texture* texture, Rect src, Rect dst, Color color) const;
+	void DrawTexture(const Texture* texture, Rect src, Rect dst, float angle, Color color) const;
+	void DrawTexture(const Texture* texture, Rect src, Rect dst, float angle, Vector2 pivot, Color color) const;
+	void DrawTexture(const Texture* texture, Rect src, Rect dst, float angle, Vector2 pivot, SDL_RendererFlip flip, Color color) const;
 
 	void DrawCircle(int x, int y, int radius, Color color) const;
 	void DrawCircleLines(int x, int y, int radius, Color color) const;
@@ -53,6 +53,7 @@ public:
 	void DrawRect(Vector2 pos, Vector2 size, Color color) const;
 	void DrawRectLines(Vector2 pos, Vector2 size, Color color) const;
 	void DrawRect(Rect rect, Color color) const;
+	void DrawRectLines(Rect rect, Color color) const;
 
 	void SetBackgroundColor(Color color);
 
