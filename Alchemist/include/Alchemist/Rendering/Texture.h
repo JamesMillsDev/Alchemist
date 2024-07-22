@@ -5,11 +5,11 @@
 struct SDL_Texture;
 struct Color;
 
-enum ETextureFormat
+enum ETextureType
 {
-	Jpg,
-	Png,
-	Tiff
+	JPG,
+	PNG,
+	TIFF
 };
 
 class DLL Texture
@@ -17,7 +17,7 @@ class DLL Texture
 	friend class RenderEngine;
 
 public:
-	Texture(const char* name, ETextureFormat format);
+	Texture(const char* name, ETextureType type);
 	~Texture();
 
 	Texture(const Texture&) = delete;
@@ -37,7 +37,7 @@ private:
 	char* m_name;
 
 	SDL_Texture* m_texture;
-	ETextureFormat m_format;
+	ETextureType m_type;
 
 private:
 	void Tint(Color tint) const;

@@ -17,7 +17,7 @@ protected:
 
 	void BeginPlay() override
 	{
-		m_texture = new Texture("lettuce", Png);
+		m_texture = new Texture("lettuce", PNG);
 		m_texture->Load();
 	}
 

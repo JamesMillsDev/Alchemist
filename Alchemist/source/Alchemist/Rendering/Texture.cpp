@@ -9,8 +9,8 @@
 
 using std::stringstream;
 
-Texture::Texture(const char* name, ETextureFormat format)
-	: m_name{ new char[strlen(name)] }, m_texture{ nullptr }, m_format{ format }
+Texture::Texture(const char* name, ETextureType type)
+	: m_name{ new char[strlen(name)] }, m_texture{ nullptr }, m_type{ type }
 {
 	strcpy_s(m_name, strlen(name) + 1, name);
 }
@@ -23,22 +23,18 @@ void Texture::Load()
 	path << "Content\\Textures\\";
 	path << m_name;
 
-	switch (m_format)  // NOLINT(clang-diagnostic-switch-enum)
+	switch (m_type)  // NOLINT(clang-diagnostic-switch-enum)
 	{
-	case Jpg:
+	case JPG:
 		path << ".jpg";
 		break;
 
-	case Png:
+	case PNG:
 		path << ".png";
 		break;
 
-	case Tiff:
+	case TIFF:
 		path << ".tif";
-		break;
-
-	default:
-		path << ".png";
 		break;
 	}
 
