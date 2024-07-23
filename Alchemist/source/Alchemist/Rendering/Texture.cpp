@@ -15,7 +15,11 @@ Texture::Texture(const char* name, ETextureType type)
 	strcpy_s(m_name, strlen(name) + 1, name);
 }
 
-Texture::~Texture() = default;
+Texture::~Texture()
+{
+	if (m_texture != nullptr)
+		Unload();
+}
 
 void Texture::Load()
 {
