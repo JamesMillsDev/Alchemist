@@ -6,6 +6,7 @@
 #include <Alchemist/Rendering/RenderEngine.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_render.h>
+#include <SDL/SDL_opengl.h>
 
 using std::stringstream;
 
@@ -50,6 +51,7 @@ void Texture::Load()
 	}
 
 	m_texture = SDL_CreateTextureFromSurface(Alchemist::GetRenderEngine()->m_renderer, surface);
+
 	if (m_texture == nullptr)
 	{
 		std::cout << "Error creating texture\n";

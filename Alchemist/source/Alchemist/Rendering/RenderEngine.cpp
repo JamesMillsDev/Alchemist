@@ -1,5 +1,6 @@
 #include "Alchemist/Rendering/RenderEngine.h"
 
+#include <format>
 #include <iostream>
 #include <Alchemist/Screen.h>
 #include <Alchemist/Rendering/Color.h>
@@ -8,6 +9,9 @@
 #include <Alchemist/Utilities/Vector2.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_render.h>
+#include <SDL/SDL_ttf.h>
+
+#include "Alchemist/Utilities/Console.h"
 
 void RenderEngine::DrawTexture(const Texture* texture, const int x, const int y, const Color color) const
 {
@@ -335,7 +339,11 @@ void RenderEngine::SetBackgroundColor(const Color color)
 	m_backgroundColor = color;
 }
 
-RenderEngine::RenderEngine() = default;
+RenderEngine::RenderEngine()
+	: m_renderer{ nullptr }, m_backgroundColor{ 0, 0, 0, 0 }
+{
+	
+}
 
 RenderEngine::~RenderEngine()
 {
@@ -349,14 +357,25 @@ int RenderEngine::Initialise(const Screen* screen, const int index, const uint f
 {
 	if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG | IMG_INIT_TIF) == 0)
 	{
-		std::cout << "Failed to initialise image library: " << IMG_GetError() << "\n";
+		Console::LogError(std::format("Failed to initialise image library: {}", IMG_GetError()));
 		return EXIT_FAILURE;
 	}
+
+	Console::Log("Image library initialised successfully!");
+
+	// Initialize SDL_ttf
+	if (TTF_Init() < 0) 
+	{
+		Console::LogError(std::format("Failed to initialise text library: {}", TTF_GetError()));
+		return false;
+	}
+
+	Console::Log("Text library initialised successfully!");
 
 	m_renderer = SDL_CreateRenderer(screen->m_window, index, flags);
 	if (m_renderer == nullptr)
 	{
-		std::cout << "Failed to create renderer: " << SDL_GetError() << "\n";
+		Console::LogError(std::format("Failed to create renderer: {}", SDL_GetError()));
 		return EXIT_FAILURE;
 	}
 

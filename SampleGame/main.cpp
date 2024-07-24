@@ -19,12 +19,15 @@ protected:
 	{
 		m_texture = new Texture("lettuce", PNG);
 		m_texture->Load();
+		m_texture2 = new Texture("lettuce", PNG);
+		m_texture2->Load();
 	}
 
 	void EndPlay() override {}
 
 private:
 	Texture* m_texture;
+	Texture* m_texture2;
 
 };
 
