@@ -55,6 +55,9 @@ public:
 	void DrawRect(Rect rect, Color color) const;
 	void DrawRectLines(Rect rect, Color color) const;
 
+	void DrawLine(int xStart, int yStart, int xEnd, int yEnd, Color color) const;
+	void DrawLine(Vector2 start, Vector2 end, Color color) const;
+
 	void SetBackgroundColor(Color color);
 
 public:

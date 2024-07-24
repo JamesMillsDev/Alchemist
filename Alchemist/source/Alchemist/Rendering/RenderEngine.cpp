@@ -9,9 +9,10 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_render.h>
 
-void RenderEngine::DrawTexture(const Texture* texture, int x, int y, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const int x, const int y, const Color color) const
 {
-	SDL_SetRenderDrawColor(m_renderer, color.red, color.green, color.blue, color.alpha);
+	texture->ResetTint();
+	texture->Tint(color);
 
 	SDL_Point size;
 	SDL_QueryTexture(*texture, nullptr, nullptr, &size.x, &size.y);
@@ -22,12 +23,23 @@ void RenderEngine::DrawTexture(const Texture* texture, int x, int y, Color color
 	SDL_RenderCopy(m_renderer, *texture, &source, &destination);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, int x, int y, int w, int h, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const int x, const int y, const int w, const int h, 
+	const Color color) const
 {
-	DrawTexture(texture, x, y, color);
+	texture->ResetTint();
+	texture->Tint(color);
+
+	SDL_Point size;
+	SDL_QueryTexture(*texture, nullptr, nullptr, &size.x, &size.y);
+
+	const SDL_Rect source = { 0, 0, size.x, size.y };
+	const SDL_Rect destination = { x, y, w, h };
+
+	SDL_RenderCopy(m_renderer, *texture, &source, &destination);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, int x, int y, int w, int h, float angle, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const int x, const int y, const int w, const int h, 
+	const float angle, const Color color) const
 {
 	texture->ResetTint();
 	texture->Tint(color);
@@ -41,12 +53,13 @@ void RenderEngine::DrawTexture(const Texture* texture, int x, int y, int w, int 
 	SDL_RenderCopyEx(m_renderer, *texture, &source, &destination, angle, nullptr, SDL_FLIP_NONE);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, int x, int y, int w, int h, float angle, Vector2 pivot, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const int x, const int y, const int w, const int h, 
+	const float angle, const Vector2 pivot, const Color color) const
 {
 	DrawTexture(texture, x, y, w, h, angle, pivot, SDL_FLIP_NONE, color);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Vector2 pos, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Vector2 pos, const Color color) const
 {
 	texture->ResetTint();
 	texture->Tint(color);
@@ -60,7 +73,7 @@ void RenderEngine::DrawTexture(const Texture* texture, Vector2 pos, Color color)
 	SDL_RenderCopy(m_renderer, *texture, &source, &destination);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Vector2 pos, Vector2 size, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Vector2 pos, const Vector2 size, const Color color) const
 {
 	texture->ResetTint();
 	texture->Tint(color);
@@ -71,7 +84,8 @@ void RenderEngine::DrawTexture(const Texture* texture, Vector2 pos, Vector2 size
 	SDL_RenderCopy(m_renderer, *texture, &source, &destination);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Vector2 pos, Vector2 size, float angle, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Vector2 pos, const Vector2 size, const float angle, 
+	const Color color) const
 {
 	texture->ResetTint();
 	texture->Tint(color);
@@ -82,33 +96,35 @@ void RenderEngine::DrawTexture(const Texture* texture, Vector2 pos, Vector2 size
 	SDL_RenderCopyEx(m_renderer, *texture, &source, &destination, angle, nullptr, SDL_FLIP_NONE);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Vector2 pos, Vector2 size, float angle, Vector2 pivot, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Vector2 pos, const Vector2 size, const float angle, 
+	const Vector2 pivot, const Color color) const
 {
 	DrawTexture(texture, pos, size, angle, pivot, SDL_FLIP_NONE, color);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Rect rect, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Rect rect, const Color color) const
 {
 	DrawTexture(texture, rect.x, rect.y, rect.width, rect.height, color);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Rect rect, float angle, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Rect rect, const float angle, const Color color) const
 {
 	DrawTexture(texture, rect.x, rect.y, rect.width, rect.height, angle, color);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Rect rect, float angle, Vector2 pivot, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Rect rect, const float angle, const Vector2 pivot, 
+	const Color color) const
 {
 	DrawTexture(texture, rect.x, rect.y, rect.width, rect.height, angle, pivot, color);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Rect rect, float angle, Vector2 pivot,
-	SDL_RendererFlip flip, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Rect rect, const float angle, const Vector2 pivot,
+	const SDL_RendererFlip flip, const Color color) const
 {
 	DrawTexture(texture, rect.x, rect.y, rect.width, rect.height, angle, pivot, flip, color);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Rect src, Rect dst, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Rect src, const Rect dst, const Color color) const
 {
 	texture->ResetTint();
 	texture->Tint(color);
@@ -119,7 +135,8 @@ void RenderEngine::DrawTexture(const Texture* texture, Rect src, Rect dst, Color
 	SDL_RenderCopy(m_renderer, *texture, &source, &destination);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Rect src, Rect dst, float angle, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Rect src, const Rect dst, const float angle, 
+	const Color color) const
 {
 	texture->ResetTint();
 	texture->Tint(color);
@@ -130,13 +147,14 @@ void RenderEngine::DrawTexture(const Texture* texture, Rect src, Rect dst, float
 	SDL_RenderCopyEx(m_renderer, *texture, &source, &destination, angle, nullptr, SDL_FLIP_NONE);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Rect src, Rect dst, float angle, Vector2 pivot, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Rect src, const Rect dst, const float angle, 
+	const Vector2 pivot, const Color color) const
 {
 	DrawTexture(texture, src, dst, angle, pivot, SDL_FLIP_NONE, color);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Rect src, Rect dst, float angle, Vector2 pivot,
-	SDL_RendererFlip flip, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Rect src, const Rect dst, const float angle, 
+	const Vector2 pivot, const SDL_RendererFlip flip, const Color color) const
 {
 	texture->ResetTint();
 	texture->Tint(color);
@@ -148,14 +166,14 @@ void RenderEngine::DrawTexture(const Texture* texture, Rect src, Rect dst, float
 	SDL_RenderCopyEx(m_renderer, *texture, &source, &destination, angle, &center, flip);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, Vector2 pos, Vector2 size, float angle, Vector2 pivot,
-	SDL_RendererFlip flip, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const Vector2 pos, const Vector2 size, const float angle, 
+	const Vector2 pivot, const SDL_RendererFlip flip, const Color color) const
 {
 	DrawTexture(texture, pos.x, pos.y, size.x, size.y, angle, pivot, flip, color);
 }
 
-void RenderEngine::DrawTexture(const Texture* texture, int x, int y, int w, int h, float angle, Vector2 pivot,
-	SDL_RendererFlip flip, Color color) const
+void RenderEngine::DrawTexture(const Texture* texture, const int x, const int y, const int w, const int h, const float angle, 
+	const Vector2 pivot, const SDL_RendererFlip flip, const Color color) const
 {
 	texture->ResetTint();
 	texture->Tint(color);
@@ -170,7 +188,7 @@ void RenderEngine::DrawTexture(const Texture* texture, int x, int y, int w, int 
 	SDL_RenderCopyEx(m_renderer, *texture, &source, &destination, angle, &center, flip);
 }
 
-void RenderEngine::DrawCircle(int x, int y, int radius, Color color) const
+void RenderEngine::DrawCircle(const int x, const int y, int const radius, Color const color) const
 {
 	int offsetX = 0;
 	int offsetY = radius;
@@ -209,7 +227,7 @@ void RenderEngine::DrawCircle(int x, int y, int radius, Color color) const
 	}
 }
 
-void RenderEngine::DrawCircleLines(int x, int y, int radius, Color color) const
+void RenderEngine::DrawCircleLines(const int x, const int y, const int radius, const Color color) const
 {
 	int offsetX = 0;
 	int offsetY = radius;
@@ -252,7 +270,7 @@ void RenderEngine::DrawCircleLines(int x, int y, int radius, Color color) const
 	}
 }
 
-void RenderEngine::DrawRect(int x, int y, int w, int h, Color color) const
+void RenderEngine::DrawRect(const int x, const int y, const int w, const int h, const Color color) const
 {
 	SDL_SetRenderDrawColor(m_renderer, color.red, color.green, color.blue, color.alpha);
 
@@ -260,7 +278,7 @@ void RenderEngine::DrawRect(int x, int y, int w, int h, Color color) const
 	SDL_RenderFillRect(m_renderer, &sdlRect);
 }
 
-void RenderEngine::DrawRectLines(int x, int y, int w, int h, Color color) const
+void RenderEngine::DrawRectLines(const int x, const int y, const int w, const int h, const Color color) const
 {
 	SDL_SetRenderDrawColor(m_renderer, color.red, color.green, color.blue, color.alpha);
 
@@ -268,7 +286,7 @@ void RenderEngine::DrawRectLines(int x, int y, int w, int h, Color color) const
 	SDL_RenderDrawRect(m_renderer, &sdlRect);
 }
 
-void RenderEngine::DrawRect(Vector2 pos, Vector2 size, Color color) const
+void RenderEngine::DrawRect(const Vector2 pos, const Vector2 size, const Color color) const
 {
 	SDL_SetRenderDrawColor(m_renderer, color.red, color.green, color.blue, color.alpha);
 
@@ -276,7 +294,7 @@ void RenderEngine::DrawRect(Vector2 pos, Vector2 size, Color color) const
 	SDL_RenderFillRect(m_renderer, &sdlRect);
 }
 
-void RenderEngine::DrawRectLines(Vector2 pos, Vector2 size, Color color) const
+void RenderEngine::DrawRectLines(const Vector2 pos, const Vector2 size, const Color color) const
 {
 	SDL_SetRenderDrawColor(m_renderer, color.red, color.green, color.blue, color.alpha);
 
@@ -284,7 +302,7 @@ void RenderEngine::DrawRectLines(Vector2 pos, Vector2 size, Color color) const
 	SDL_RenderDrawRect(m_renderer, &sdlRect);
 }
 
-void RenderEngine::DrawRect(Rect rect, Color color) const
+void RenderEngine::DrawRect(const Rect rect, const Color color) const
 {
 	SDL_SetRenderDrawColor(m_renderer, color.red, color.green, color.blue, color.alpha);
 
@@ -292,7 +310,7 @@ void RenderEngine::DrawRect(Rect rect, Color color) const
 	SDL_RenderFillRect(m_renderer, &sdlRect);
 }
 
-void RenderEngine::DrawRectLines(Rect rect, Color color) const
+void RenderEngine::DrawRectLines(const Rect rect, const Color color) const
 {
 	SDL_SetRenderDrawColor(m_renderer, color.red, color.green, color.blue, color.alpha);
 
@@ -300,7 +318,19 @@ void RenderEngine::DrawRectLines(Rect rect, Color color) const
 	SDL_RenderDrawRect(m_renderer, &sdlRect);
 }
 
-void RenderEngine::SetBackgroundColor(Color color)
+void RenderEngine::DrawLine(const int xStart, const int yStart, const int xEnd, const int yEnd, const Color color) const
+{
+	SDL_SetRenderDrawColor(m_renderer, color.red, color.green, color.blue, color.alpha);
+	SDL_RenderDrawLine(m_renderer, xStart, yStart, xEnd, yEnd);
+}
+
+void RenderEngine::DrawLine(const Vector2 start, const Vector2 end, const Color color) const
+{
+	SDL_SetRenderDrawColor(m_renderer, color.red, color.green, color.blue, color.alpha);
+	SDL_RenderDrawLine(m_renderer, start.x, start.y, end.x, end.y);
+}
+
+void RenderEngine::SetBackgroundColor(const Color color)
 {
 	m_backgroundColor = color;
 }
