@@ -43,4 +43,6 @@ private:
 	void Tint(Color tint) const;
 	void ResetTint() const;
 
+	string ExtensionFor() const;
+
 };

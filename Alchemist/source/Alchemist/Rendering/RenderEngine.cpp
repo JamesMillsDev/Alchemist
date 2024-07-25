@@ -1,17 +1,15 @@
 #include "Alchemist/Rendering/RenderEngine.h"
 
 #include <format>
-#include <iostream>
 #include <Alchemist/Screen.h>
 #include <Alchemist/Rendering/Color.h>
 #include <Alchemist/Rendering/Texture.h>
+#include <Alchemist/Utilities/Console.h>
 #include <Alchemist/Utilities/Rect.h>
 #include <Alchemist/Utilities/Vector2.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_render.h>
 #include <SDL/SDL_ttf.h>
-
-#include "Alchemist/Utilities/Console.h"
 
 void RenderEngine::DrawTexture(const Texture* texture, const int x, const int y, const Color color) const
 {

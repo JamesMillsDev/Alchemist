@@ -1,6 +1,7 @@
 #include "Alchemist/Screen.h"
 
-#include <iostream>
+#include <format>
+#include <Alchemist/Utilities/Console.h>
 #include <SDL/SDL.h>
 
 int Screen::Width() const
@@ -37,18 +38,22 @@ Screen::~Screen()
 
 int Screen::Open()
 {
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO) != 0)
+	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
 	{
-		std::cout << "SDL failed to initialise: " << SDL_GetError() << "\n";
+		Console::LogError(std::format("SDL failed to initialize: {}", SDL_GetError()));
 		return EXIT_FAILURE;
 	}
+
+	Console::Log("Successfully initialised SDL!");
 
 	m_window = SDL_CreateWindow(m_title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_width, m_height, SDL_WINDOW_OPENGL);
 	if(m_window == nullptr)
 	{
-		std::cout << "SDL failed to create window: " << SDL_GetError() << "\n";
+		Console::LogError(std::format("SDL failed to create window: {}", SDL_GetError()));
 		return EXIT_FAILURE;
 	}
+
+	Console::Log("Successfully created window!");
 
 	return EXIT_SUCCESS;
 }

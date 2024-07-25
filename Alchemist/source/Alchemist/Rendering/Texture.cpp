@@ -1,12 +1,14 @@
 #include "Alchemist/Rendering/Texture.h"
 
+#include <format>
 #include <iostream>
 #include <sstream>
 #include <Alchemist/Application.h>
 #include <Alchemist/Rendering/RenderEngine.h>
+#include <Alchemist/Utilities/Console.h>
 #include <SDL/SDL_image.h>
-#include <SDL/SDL_render.h>
 #include <SDL/SDL_opengl.h>
+#include <SDL/SDL_render.h>
 
 using std::stringstream;
 
@@ -27,26 +29,12 @@ void Texture::Load()
 	stringstream path;
 	path << "Content\\Textures\\";
 	path << m_name;
-
-	switch (m_type)  // NOLINT(clang-diagnostic-switch-enum)
-	{
-	case JPG:
-		path << ".jpg";
-		break;
-
-	case PNG:
-		path << ".png";
-		break;
-
-	case TIFF:
-		path << ".tif";
-		break;
-	}
+	path << ExtensionFor();
 
 	SDL_Surface* surface = IMG_Load(path.str().c_str());
 	if (surface == nullptr)
 	{
-		std::cout << "Error loading image: " << IMG_GetError() << "\n";
+		Console::LogError(std::format("Error loading image '{}': {}", m_name, IMG_GetError()));
 		return;
 	}
 
@@ -54,9 +42,11 @@ void Texture::Load()
 
 	if (m_texture == nullptr)
 	{
-		std::cout << "Error creating texture\n";
+		Console::LogError(std::format("Error loading image: {}", IMG_GetError()));
 		return;
 	}
+
+	Console::Log(std::format("Loaded texture '{}{}'", m_name, ExtensionFor()));
 
 	SDL_FreeSurface(surface);
 }
@@ -82,4 +72,22 @@ void Texture::ResetTint() const
 {
 	SDL_SetTextureColorMod(m_texture, 255, 255, 255);
 	SDL_SetTextureAlphaMod(m_texture, 255);
+}
+
+string Texture::ExtensionFor() const
+{
+	switch (m_type)  // NOLINT(clang-diagnostic-switch-enum)
+	{
+	case JPG:
+		return ".jpg";
+
+	case PNG:
+		return ".png";
+
+	case TIFF:
+		return ".tif";
+
+	default:
+		return ".png";
+	}
 }
